@@ -1,6 +1,7 @@
 FROM ubuntu:latest
 COPY ./files/ /
 RUN echo starting build \
+    && set -x \
     && . ./lib.sh --source-only \
     && trap no_ctrlc INT \
     && trap term_handler TERM \
