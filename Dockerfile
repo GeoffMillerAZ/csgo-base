@@ -6,9 +6,11 @@ RUN echo starting build \
     && trap term_handler TERM \
     && ctrlc_count=0 \
     && chmod +x /*.sh \
-    && echo downloading release of steamcmd \
-    && apt-get update \
+    && echo Updating OS \
+    && apt-get update && apt-get dist-upgrade \
+    && echo Installing dependencies \
     && apt-get install -y wget lib32gcc1 lib32stdc++6 unzip net-tools libcurl4 locales \
+    && echo downloading release of steamcmd \
     && wget -O /tmp/steamcmd_linux.tar.gz http://media.steampowered.com/installer/steamcmd_linux.tar.gz \
     && echo installing steamcmd \
     && mkdir -p /opt/steam \
