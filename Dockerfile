@@ -10,7 +10,7 @@ RUN echo starting build \
     && dpkg --add-architecture i386 \
     && apt-get update && apt-get dist-upgrade \
     && echo Installing dependencies \
-    && apt-get install -y wget lib32gcc1 lib32stdc++6 libc6-i386 unzip net-tools libcurl4 locales \
+    && apt-get install -y wget lib32gcc1 lib32stdc++6 libc6-i386 unzip net-tools libcurl4 locales libselinux1:i386 \
     && echo downloading release of steamcmd \
     && wget -O /tmp/steamcmd_linux.tar.gz http://media.steampowered.com/installer/steamcmd_linux.tar.gz \
     && echo installing steamcmd \
