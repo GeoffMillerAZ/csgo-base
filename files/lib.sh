@@ -38,6 +38,10 @@ no_ctrlc() {
 }
 
 install() {
+    [ ! -d "/opt/steam/counterstrike" ] install_needed || update
+}
+
+install_needed() {
     echo "Installing CS:GO Dedicated Server"
     /opt/steam/steamcmd.sh +login anonymous +force_install_dir /opt/steam/counterstrike +app_update 740 validate +quit
     chown -R steam:steam /opt/steam/counterstrike

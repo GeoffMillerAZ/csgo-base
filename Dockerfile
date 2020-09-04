@@ -1,23 +1,27 @@
 FROM ubuntu:latest
 COPY ./files/ /
 RUN echo starting build \
-    && trap no_ctrlc SIGINT \
-    && trap term_handler SIGTERM \
-    && ctrlc_count=0 \
     && . ./lib.sh --source-only \
+    && trap no_ctrlc INT \
+    && trap term_handler TERM \
+    && ctrlc_count=0 \
+    && chmod +x /*.sh \
+    && echo downloading release of steamcmd \
     && apt-get update \
     && apt-get install -y wget lib32gcc1 lib32stdc++6 unzip net-tools libcurl4 locales \
     && wget -O /tmp/steamcmd_linux.tar.gz http://media.steampowered.com/installer/steamcmd_linux.tar.gz \
+    && echo installing steamcmd \
     && mkdir -p /opt/steam \
     && mkdir -p /var/csgo/cfg \
     && tar -C /opt/steam -xvzf /tmp/steamcmd_linux.tar.gz \
-    && rm /tmp/steamcmd_linux.tar.gz \
-    && chmod +x /supervisor.sh \
-    && apt-get remove -y unzip wget \
     && useradd -ms /bin/bash steam \
     && mkdir -p /home/steam/.steam \
     && chown -R steam:steam /home/steam \
+    && echo cleaning up \
+    && rm /tmp/steamcmd_linux.tar.gz \
+    && apt-get remove -y unzip wget \
     && locale-gen en_US.UTF-8 \
-    && [ ! -d "/opt/steam/counterstrike" ] && install || update
+    && echo installing counterstrike \
+    && install
 ADD ./files/ /tmp
 VOLUME ["/var/csgo/cfg"]
