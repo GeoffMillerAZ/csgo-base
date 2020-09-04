@@ -21,4 +21,3 @@ RUN echo starting build \
     && [ ! -d "/opt/steam/counterstrike" ] && install || update
 ADD ./files/ /tmp
 VOLUME ["/var/csgo/cfg"]
-CMD ["/supervisor.sh"]
